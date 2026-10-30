@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: account-service
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
+  datasource:
+    url: jdbc:h2:mem:accountdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  h2:
+    console:
+      enabled: true
+  graphql:
+    graphiql:
+      enabled: true
+  ai:
+    mcp:
+      server:
+        name: account-service
+        version: 1.0.0
+        protocol: STATELESS
+
+server:
+  port: ${SERVER_PORT:8081}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+account:
+  operations:
+    max-amount: ${ACCOUNT_MAX_OPERATION_AMOUNT:10000.00}
