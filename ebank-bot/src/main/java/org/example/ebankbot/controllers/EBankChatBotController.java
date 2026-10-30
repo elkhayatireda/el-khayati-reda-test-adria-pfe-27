@@ -18,12 +18,14 @@ public class EBankChatBotController {
     }
 
     @GetMapping(value = "/chat", produces = MediaType.TEXT_PLAIN_VALUE)
-    public String chat(@RequestParam(name = "query", defaultValue = "Bonjour") String query) {
-        return ebankAIAgent.chat(new Prompt(query));
+    public String chat(@RequestParam(name = "query", defaultValue = "Bonjour") String query,
+                       @RequestParam(name = "conversationId", defaultValue = "default") String conversationId) {
+        return ebankAIAgent.chat(new Prompt(query), conversationId);
     }
 
     @GetMapping(value = "/chatStream", produces = MediaType.TEXT_PLAIN_VALUE)
-    public Flux<String> chatStream(@RequestParam(name = "query", defaultValue = "Bonjour") String query) {
-        return ebankAIAgent.chatStream(new Prompt(query));
+    public Flux<String> chatStream(@RequestParam(name = "query", defaultValue = "Bonjour") String query,
+                                   @RequestParam(name = "conversationId", defaultValue = "default") String conversationId) {
+        return ebankAIAgent.chatStream(new Prompt(query), conversationId);
     }
 }

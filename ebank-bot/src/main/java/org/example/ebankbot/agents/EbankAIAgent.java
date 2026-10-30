@@ -36,11 +36,15 @@ public class EbankAIAgent {
         this.chatClient = builder.build();
     }
 
-    public String chat(Prompt prompt) {
-        return chatClient.prompt(prompt).call().content();
+    public String chat(Prompt prompt, String conversationId) {
+        return chatClient.prompt(prompt)
+            .advisors(advisors -> advisors.param(ChatMemory.CONVERSATION_ID, conversationId))
+            .call().content();
     }
 
-    public Flux<String> chatStream(Prompt prompt) {
-        return chatClient.prompt(prompt).stream().content();
+    public Flux<String> chatStream(Prompt prompt, String conversationId) {
+        return chatClient.prompt(prompt)
+            .advisors(advisors -> advisors.param(ChatMemory.CONVERSATION_ID, conversationId))
+            .stream().content();
     }
 }

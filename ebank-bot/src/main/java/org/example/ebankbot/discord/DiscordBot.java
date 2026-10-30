@@ -69,7 +69,7 @@ public class DiscordBot extends ListenerAdapter {
 
         try {
             // Forward prompt to Spring AI agent
-            String answer = aiAgent.chat(new Prompt(userMessage));
+            String answer = aiAgent.chat(new Prompt(userMessage), event.getAuthor().getId());
             if (answer == null || answer.isBlank()) {
                 answer = "JE NE SAIS PAS";
             }
