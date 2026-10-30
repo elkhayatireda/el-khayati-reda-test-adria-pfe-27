@@ -70,6 +70,27 @@ services:
     networks:
       - adria-network
 
+  ebank-bot:
+    build:
+      context: ./ebank-bot
+    container_name: ebank-bot
+    ports:
+      - "8058:8058"
+    environment:
+      - EUREKA_SERVER_URL=http://discovery-service:8761/eureka/
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o}
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - ACCOUNT_MCP_URL=http://account-service:8081/mcp
+      - TRANSACTION_MCP_URL=http://transaction-service:8082/mcp
+    depends_on:
+      - discovery-service
+      - account-service
+      - transaction-service
+    networks:
+      - adria-network
+
 networks:
   adria-network:
     driver: bridge

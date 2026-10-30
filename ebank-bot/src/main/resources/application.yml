@@ -1,0 +1,37 @@
+server:
+  port: 8058
+
+spring:
+  application:
+    name: ebank-bot
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      base-url: ${OPENAI_BASE_URL:https://api.groq.com/openai/v1}
+      chat:
+        options:
+          model: ${OPENAI_MODEL:qwen/qwen3.8-27b}
+    mcp:
+      client:
+        enabled: ${MCP_CLIENT_ENABLED:false}
+        streamable-http:
+          connections:
+            account:
+              url: ${ACCOUNT_MCP_URL:http://localhost:8081/mcp}
+            transaction:
+              url: ${TRANSACTION_MCP_URL:http://localhost:8082/mcp}
+  cloud:
+    discovery:
+      enabled: true
+    config:
+      enabled: false
+
+discord:
+  token: ${DISCORD_TOKEN:}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
